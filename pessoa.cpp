@@ -37,7 +37,8 @@ void Pessoa::exibirDados() const {
     << setw(centralizacao) << mensagem << "\n"
     << divisoria << "\n";
 
-    cout << "Trabalho: " << trabalho << endl;
-    cout << "Login: " << login << endl;
-    cout << "Senha: " << senha << endl;
+    cout << "Trabalho: " << trabalho << "\n";
+    cout << "Login:    " << login << "\n";
+    cout << "Senha:    " << senha << "\n";
+
 }

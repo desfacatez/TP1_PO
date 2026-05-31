@@ -6,8 +6,8 @@
 #include "CartaoCredito.h"
 #include <vector>
 #include <string>
+#include <memory>
 
-class Transacao;
 
 class Cliente : public Pessoa {
 private:

@@ -3,9 +3,7 @@
 
 #include <string>
 #include <vector>
-
-class Cliente;
-
+#include "Cliente.h"
 using namespace std;
 
 class Transacao { 
@@ -32,7 +30,7 @@ public:
     void setValor(double valor);
     void setData(const string& data);
     void setHorario(const string& horario);
-    void addCliente(Cliente* cliente) { clientesEnvolvidos.push_back(cliente); }
+    void setCliente(Cliente* cliente);
 
     void exibirTransacao() const;
 };

@@ -2,6 +2,8 @@
 #define CLIENTE_H
 
 #include "pessoa.h"
+#include "Transacao.h"
+#include "CartaoCredito.h"
 #include <vector>
 #include <string>
 
@@ -38,9 +40,10 @@ public:
     void setTipoConta(const string& t);
     void setRendimento(double t);
     void setSaldo(double s);
-    void SetTransacao(Transacao* t);
+    void setTransacao(Transacao* t);
     
     void aplicarRendimento();
+    bool temCartao() const;
     void criarCartao();
     void exibirDados() const override; 
     

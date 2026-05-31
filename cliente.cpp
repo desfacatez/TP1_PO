@@ -1,5 +1,6 @@
 #include "cliente.h"
 #include "transacao.h"
+#include "cartaoCredito.h"
 #include <iostream>
 #include <iomanip>
 
@@ -82,6 +83,8 @@ void Cliente::aplicarRendimento() {
         cout << "Erro. Conta corrente não possui rendimento.\n";
     }
 }
+bool Cliente::temCartao() const { return cartao != nullptr; }
+
 void Cliente::criarCartao() {
     if (cartao) {
         cout << "[AVISO] O cliente ja possui cartao de credito.\n";
@@ -92,4 +95,3 @@ void Cliente::criarCartao() {
     cout << "[OK] Cartao criado com limite de R$ "
          << fixed << setprecision(2) << limiteCalculado << ".\n";
 }
-bool Cliente::temCartao() const { return cartao != nullptr; }

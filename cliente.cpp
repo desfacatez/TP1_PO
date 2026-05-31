@@ -26,6 +26,7 @@ string Cliente::getTipoConta() const { return tipoConta; }
 double Cliente::getRendimento() const { return taxaRendimento; }
 double Cliente::getSaldo() const { return saldo; }
 const vector<Transacao*>& Cliente::getExtrato() const { return transacoes; }
+CartaoCredito* Cliente::getCartao()      const { return cartao.get(); }
 
 void Cliente::setDataNascimento(const string& data) { dataNascimento = data; }
 void Cliente::setRemuneracao(double remuneracao) { this->remuneracao = remuneracao; }
@@ -62,7 +63,6 @@ void Cliente::exibirDados() const {
 
     cout << "Transacoes      : " << transacoes.size() << " registrada(s)\n";
     cout << "==================================\n";
-    */
 
     cout << Pessoa::divisoria << "\n\n";
     
@@ -82,7 +82,6 @@ void Cliente::aplicarRendimento() {
         cout << "Erro. Conta corrente não possui rendimento.\n";
     }
 }
-/*
 void Cliente::criarCartao() {
     if (cartao) {
         cout << "[AVISO] O cliente ja possui cartao de credito.\n";
@@ -93,4 +92,4 @@ void Cliente::criarCartao() {
     cout << "[OK] Cartao criado com limite de R$ "
          << fixed << setprecision(2) << limiteCalculado << ".\n";
 }
-*/         
+bool Cliente::temCartao() const { return cartao != nullptr; }

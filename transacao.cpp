@@ -17,6 +17,7 @@ void Transacao::setTipo(const string& tipo) { this->tipo = tipo; }
 void Transacao::setValor(double valor) { this->valor = valor; }
 void Transacao::setData(const string& data) { this->data = data; }
 void Transacao::setHorario(const string& horario) { this->horario = horario; }
+void Transacao::setCliente(Cliente* cliente) { clientesEnvolvidos.push_back(cliente); }
 const vector<Cliente*>& Transacao::getClientes() const { return clientesEnvolvidos; }
 
 void Transacao::exibirTransacao() const {

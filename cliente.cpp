@@ -1,45 +1,55 @@
-#include "Cliente.h"
-#include "Transacao.h"
+#include "cliente.h"
+#include "transacao.h"
 #include <iostream>
 #include <iomanip>
-using namespace std;
 
+using namespace std;
 
 Cliente::Cliente(const string& nome, const string& dataNasc,
                  const string& trabalho, double remuneracao,
                  const string& tipoConta, double taxaDeRendimento,
                  double saldo, const string& login, const string& senha)
                  :Pessoa(nome, trabalho, login, senha), dataNascimento(dataNasc),
-                  remuneracao(remuneracao), tipoConta(tipoConta), taxaDeRendimento(taxaDeRendimento), saldo(saldo) {}
+                 remuneracao(remuneracao), tipoConta(tipoConta),
+                 taxaRendimento(taxaRendimento), saldo(saldo) {
+                    // Padronização da string tipoConta
+                    if(tipoConta == "poupanca" || tipoConta == "poupança" || tipoConta == "Poupanca" || tipoConta == "Poupança"){
+                        this->tipoConta = "Poupança";
+                    } else {
+                        this->tipoConta = "Corrente";
+                    }
+                 }
 
-string Cliente::getDataNascimento()            const { return dataNascimento; }
-double Cliente::getRemuneracao()               const { return remuneracao; }
-string Cliente::getTipoConta()                 const { return tipoConta; }
-double Cliente::getRendimento()                const { return taxaDeRendimento; }
-double Cliente::getSaldo()                     const { return saldo; }
-const vector<Transacao>& Cliente::getExtrato() const { return transacoes; }
+string Cliente::getDataNascimento() const { return dataNascimento; }
+double Cliente::getRemuneracao() const { return remuneracao; }
+string Cliente::getTipoConta() const { return tipoConta; }
+double Cliente::getRendimento() const { return taxaRendimento; }
+double Cliente::getSaldo() const { return saldo; }
+const vector<Transacao*>& Cliente::getExtrato() const { return transacoes; }
 
-void Cliente::setDataNascimento(const string& d) { dataNascimento = d; }
-void Cliente::setRemuneracao(double r)           { remuneracao = r; }
-void Cliente::setTipoConta(const string& t)      { tipoConta = t; }
-void Cliente::setRendimento(double t)            { taxaDeRendimento = t; }
-void Cliente::setSaldo(double s)                 { saldo = s; }
-void Cliente::SetTransacao(const Transacao& t) { transacoes.push_back(t); }
+void Cliente::setDataNascimento(const string& data) { dataNascimento = data; }
+void Cliente::setRemuneracao(double remuneracao) { this->remuneracao = remuneracao; }
+void Cliente::setTipoConta(const string& tipoConta) { this->tipoConta = tipoConta; }
+void Cliente::setRendimento(double rendimento) { taxaRendimento = rendimento; }
+void Cliente::setSaldo(double saldo) { this->saldo = saldo; }
+void Cliente::SetTransacao(Transacao* t) { transacoes.push_back(t); }
 
 void Cliente::exibirDados() const {
-    cout << "\n======== DADOS DO CLIENTE ========\n";
-    cout << "Nome            : " << nome << "\n";
-    cout << "Data Nascimento : " << dataNascimento << "\n";
-    cout << "Trabalho        : " << trabalho << "\n";
-    cout << "Remuneracao     : R$ " << fixed << setprecision(2) << remuneracao << "\n";
-    cout << "Login           : " << login << "\n";
-    cout << "Tipo de Conta   : " << tipoConta << "\n";
 
-    if (tipoConta == "poupanca") {
-        cout << "Taxa Rendimento : " << taxaDeRendimento << "% ao mes\n";
+    // Chama o cabeçalho global em Pessoa (para Cliente)
+    Pessoa::exibirDados();
+
+    // Exibe dados adicionais
+    cout << "Data de Nascimento:     " << dataNascimento << "\n";
+    cout << "Remuneracão:     R$ " << fixed << setprecision(2) << remuneracao << "\n";
+    cout << "Tipo de Conta:     " << tipoConta << "\n";
+
+    if (tipoConta == "poupanca" || tipoConta == "poupança") {
+        cout << "Taxa Rendimento:     " << taxaRendimento << "% ao mês\n";
     }
 
-    cout << "Saldo Atual     : R$ " << fixed << setprecision(2) << saldo << "\n";
+    cout << "Saldo Atual:     R$" << fixed << setprecision(2) << saldo << "\n";
+    cout << "Transações:     " << transacoes.size() << " efetuada(s)\n";
     /*cout << "Cartao Credito  : " << (cartao ? "Sim" : "Nao") << "\n";
 
 
@@ -53,17 +63,23 @@ void Cliente::exibirDados() const {
     cout << "Transacoes      : " << transacoes.size() << " registrada(s)\n";
     cout << "==================================\n";
     */
+
+    cout << Pessoa::divisoria << "\n\n";
+    
 }
 
 void Cliente::aplicarRendimento() {
-    if (tipoConta == "poupanca" && taxaDeRendimento > 0.0) {
-        double rendimento = saldo * (taxaDeRendimento / 100.0);
+    if (tipoConta == "Poupança" && taxaRendimento > 0.0){
+        double rendimento = saldo * (taxaRendimento / 100.0);
         saldo += rendimento;
-        cout << "[INFO] Rendimento de R$ " << fixed << setprecision(2)
-             << rendimento << " aplicado ao saldo de " << nome
-             << " (novo saldo: R$ " << saldo << ").\n";
+
+        cout << "Rendimento de R$" << fixed << setprecision(2)
+             << rendimento << " aplicado ao saldo de " << getNome();
+        
+        cout << "(Novo saldo de: R$" << saldo << ").\n";
+
     } else {
-        cout << "[AVISO] Conta corrente nao possui rendimento.\n";
+        cout << "Erro. Conta corrente não possui rendimento.\n";
     }
 }
 /*

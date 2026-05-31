@@ -1,8 +1,11 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
-#include "Pessoa.h"
-#include "Transacao.h"
+
+#include "pessoa.h"
 #include <vector>
+#include <string>
+
+class Transacao;
 
 class Cliente : public Pessoa {
 private:
@@ -11,30 +14,31 @@ private:
     string tipoConta;                   
     double taxaDeRendimento;              
     double saldo;                       
-    vector<Transacao> transacoes; 
+    vector<Transacao*> transacoes; 
     
 public:
-    Cliente();
+    Cliente() = default;
 
     Cliente(const string& nome, const string& dataNasc,
             const string& trabalho, double remuneracao,
             const string& tipoConta, double taxaDeRendimento,
             double saldo, const string& login, const string& senha);
 
+    // Getters
     string getDataNascimento() const;
     double getRemuneracao() const;
     string getTipoConta() const;
     double getRendimento() const;
     double getSaldo() const;
-    const vector<Transacao>& getExtrato() const;
+    const vector<Transacao*>& getExtrato() const;
    
-
+    // Setters
     void setDataNascimento(const string& d);
     void setRemuneracao(double r);
     void setTipoConta(const string& t);
     void setRendimento(double t);
     void setSaldo(double s);
-    void SetTransacao(const Transacao& t);
+    void SetTransacao(Transacao* t);
     
     void aplicarRendimento();
     void criarCartao();
